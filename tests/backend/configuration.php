@@ -122,14 +122,6 @@ return [
                 'group_paths' => [],
             ],
         ],
-        'Filegator\Services\Router\Router' => [
-            'handler' => '\Filegator\Services\Router\Router',
-            'config' => [
-                'query_param' => 'r',
-                'routes_file' => __DIR__ . '/../../backend/Controllers/routes.php',
-            ],
-        ],
-
         // Audit and file profile query store, disabled by default in tests.
         'Filegator\Services\FileProfile\Adapters\Sqlite\SqliteConnection' => [
             'handler' => '\Filegator\Services\FileProfile\Adapters\Sqlite\SqliteConnection',
@@ -191,6 +183,17 @@ return [
         'Filegator\Services\FileProfile\FileProfileService' => [
             'handler' => '\Filegator\Services\FileProfile\FileProfileService',
             'config' => [],
+        ],
+
+        // The router MUST be registered last (see configuration.php): its
+        // init() dispatches the request and resolves the controller, so all
+        // controller dependencies must already be bound in the container.
+        'Filegator\Services\Router\Router' => [
+            'handler' => '\Filegator\Services\Router\Router',
+            'config' => [
+                'query_param' => 'r',
+                'routes_file' => __DIR__ . '/../../backend/Controllers/routes.php',
+            ],
         ],
     ],
 ];
